@@ -4,15 +4,15 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { SlidersHorizontal, Heart } from 'lucide-react';
 
 export default function HommePage() {
     const [sortBy, setSortBy] = useState('nouveautes');
 
-    // Produits (plus tard depuis base de données)
-    const products = [
+    // Produits de base
+    const productsData = [
         {
             id: 1,
             name: "Pull col roulé en laine mérinos",
@@ -20,7 +20,8 @@ export default function HommePage() {
             material: "100% Laine mérinos",
             colors: ["Noir", "Beige", "Gris"],
             image: "/images/products/homme-pull-1.jpg",
-            badge: "Nouveauté"
+            badge: "Nouveauté",
+            dateAjout: new Date('2025-11-20')
         },
         {
             id: 2,
@@ -29,7 +30,8 @@ export default function HommePage() {
             material: "100% Coton",
             colors: ["Blanc", "Bleu ciel"],
             image: "/images/products/homme-chemise-1.jpg",
-            badge: null
+            badge: null,
+            dateAjout: new Date('2025-11-15')
         },
         {
             id: 3,
@@ -38,7 +40,8 @@ export default function HommePage() {
             material: "100% Coton biologique",
             colors: ["Beige", "Marine", "Kaki"],
             image: "/images/products/homme-pantalon-1.jpg",
-            badge: "Made in France"
+            badge: "Made in France",
+            dateAjout: new Date('2025-11-10')
         },
         {
             id: 4,
@@ -47,7 +50,8 @@ export default function HommePage() {
             material: "100% Laine",
             colors: ["Beige", "Marine"],
             image: "/images/products/homme-gilet-1.jpg",
-            badge: null
+            badge: null,
+            dateAjout: new Date('2025-11-05')
         },
         {
             id: 5,
@@ -56,7 +60,8 @@ export default function HommePage() {
             material: "100% Laine vierge",
             colors: ["Camel", "Marine"],
             image: "/images/products/homme-manteau-1.jpg",
-            badge: "Nouveauté"
+            badge: "Nouveauté",
+            dateAjout: new Date('2025-11-25')
         },
         {
             id: 6,
@@ -65,9 +70,30 @@ export default function HommePage() {
             material: "100% Coton pima",
             colors: ["Blanc", "Noir", "Beige"],
             image: "/images/products/homme-tshirt-1.jpg",
-            badge: null
+            badge: null,
+            dateAjout: new Date('2025-11-01')
         },
     ];
+
+    // Tri des produits selon la sélection
+    const products = useMemo(() => {
+        const sorted = [...productsData];
+
+        switch (sortBy) {
+            case 'prix-croissant':
+                return sorted.sort((a, b) => a.price - b.price);
+
+            case 'prix-decroissant':
+                return sorted.sort((a, b) => b.price - a.price);
+
+            case 'nom':
+                return sorted.sort((a, b) => a.name.localeCompare(b.name));
+
+            case 'nouveautes':
+            default:
+                return sorted.sort((a, b) => b.dateAjout.getTime() - a.dateAjout.getTime());
+        }
+    }, [sortBy]);
 
     return (
         <main className="min-h-screen bg-angora-white">
@@ -103,7 +129,7 @@ export default function HommePage() {
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="font-body text-sm uppercase tracking-wider text-angora-black border border-gray-300 px-4 py-2 hover:border-angora-vanilla focus:border-angora-black focus:outline-none transition-colors cursor-pointer"
+                            className="font-body text-sm uppercase tracking-wider text-angora-black border border-gray-300 px-4 py-2 hover:border-angora-vanilla focus:border-angora-black focus:outline-none transition-colors cursor-pointer bg-angora-white"
                         >
                             <option value="nouveautes">Nouveautés</option>
                             <option value="prix-croissant">Prix croissant</option>
@@ -139,14 +165,26 @@ export default function HommePage() {
                                     )}
 
                                     {/* Hover: Bouton favoris */}
-                                    <button className="absolute top-3 right-3 w-10 h-10 bg-angora-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-angora-vanilla">
+                                    <button
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            alert(`❤️ ${product.name} ajouté aux favoris`);
+                                        }}
+                                        className="absolute top-3 right-3 w-10 h-10 bg-angora-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-angora-vanilla"
+                                    >
                                         <Heart className="w-5 h-5 text-angora-nero" strokeWidth={1.5} />
                                     </button>
 
                                     {/* Hover: Quick add */}
-                                    <div className="absolute bottom-0 left-0 right-0 bg-angora-black text-angora-white py-3 text-center font-body text-xs uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer hover:bg-angora-vanilla hover:text-angora-nero">
+                                    <button
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            alert(`🛒 ${product.name} ajouté au panier`);
+                                        }}
+                                        className="absolute bottom-0 left-0 right-0 bg-angora-black text-angora-white py-3 text-center font-body text-xs uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-angora-vanilla hover:text-angora-nero"
+                                    >
                                         Ajouter au panier
-                                    </div>
+                                    </button>
                                 </div>
 
                                 {/* Infos produit */}
