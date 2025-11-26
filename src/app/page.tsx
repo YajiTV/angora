@@ -1,3 +1,4 @@
+//Home page
 export default function Home() {
     return (
         <main className="min-h-screen bg-white flex flex-col justify-center items-center px-4">
