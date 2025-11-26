@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { User, Package, MapPin, Heart, LogOut } from 'lucide-react';
 
 export default function AccountPage() {
-    // Plus tard, tu récupéreras ces données depuis une base de données
     const user = {
         firstName: "Marie",
         lastName: "Dupont",
