@@ -1,37 +1,89 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* POLICES SYSTEMES */
+/* ============================================ */
+/* POLICES SYSTEMES                            */
+/* ============================================ */
+
 @font-face {
     font-family: 'Bodoni72';
     src: local('Bodoni 72'), local('Bodoni72'), local('Bodoni 72 Book'), local('Bodoni MT'), local('Didot');
     font-style: normal;
     font-weight: normal;
 }
+
 @font-face {
     font-family: 'Helvetica';
-    src: local('Helvetica'), local('Arial'), local('Liberation Sans'), local('sans-serif');
+    src: local('Helvetica'), local('Arial'), local('Liberation Sans');
     font-style: normal;
     font-weight: normal;
 }
 
-/* Variables CSS pour les polices */
+/* ============================================ */
+/* VARIABLES CSS POUR LES POLICES              */
+/* ============================================ */
+
 :root {
     --font-title: 'Bodoni72', 'Bodoni 72', 'Bodoni MT', 'Didot', serif;
-    --font-body: 'Helvetica', 'Arial', 'Liberation Sans', 'sans-serif';
+    --font-body: 'Helvetica', Arial, 'Liberation Sans', sans-serif;
 }
 
-/* Classes utilitaires */
+/* ============================================ */
+/* CLASSES UTILITAIRES POLICES                 */
+/* ============================================ */
+
 .font-title {
     font-family: var(--font-title);
 }
+
 .font-body {
     font-family: var(--font-body);
 }
 
+/* ============================================ */
+/* STYLES DE BASE                              */
+/* ============================================ */
+
 body {
-    background: #fff;
+    background: #ffffff;
     color: #171717;
     font-family: var(--font-body);
+}
+
+/* ============================================ */
+/* ANIMATIONS & TRANSITIONS HEADER             */
+/* ============================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Backdrop blur support */
+@supports (backdrop-filter: blur(12px)) {
+    header {
+        backdrop-filter: blur(12px);
+    }
+}
+
+/* Amélioration du hover sur desktop uniquement */
+@media (hover: hover) {
+    button:hover,
+    a:hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 }
