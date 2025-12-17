@@ -10,7 +10,7 @@ export default function Header() {
     const [searchOpen, setSearchOpen] = useState(false);
 
     // Données pour la SearchBar - À remplacer par vos vraies données
-    const searchData = ["Pulls en cachemire", "Écharpes", "Bonnets", "Gants", "Robes", "Pantalons"];
+    const searchData = ["Manteaux", "Pulls", "Chemise", "Pantalons", "Gilets", "T-shirts"];
 
     return (
         <header className="sticky top-0 z-50 bg-angora-white/95 backdrop-blur-md border-b border-gray-200">
